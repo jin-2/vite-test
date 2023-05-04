@@ -1,9 +1,11 @@
 import { Layout, theme } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { List } from 'antd';
+import axios from 'axios';
 import Keywords from './components/Keywords';
 import HeaderLine from './components/HeaderLine';
 import NewsItem from './components/NewsItem';
+import { KEYWORDS } from './data/keywords.js';
 
 const { Content, Footer } = Layout;
 
@@ -56,17 +58,45 @@ const data = [
 ];
 
 const App = () => {
+  const [firstKeyword] = KEYWORDS;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const onChange = () => {
-    console.log('change');
+  const [news, setNews] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState(firstKeyword.name);
+
+  useEffect(() => {
+    getScrapData(firstKeyword.name);
+  }, []);
+
+  const getScrapData = async (keyword) => {
+    try {
+      const { status, data } = await axios.get(
+        `http://172.16.48.167:3012/v1/getListFromWord?word=${encodeURIComponent(
+          keyword
+        )}`
+      );
+      if (status === 200) {
+        setNews(data);
+      } else {
+        alert('조회에 실패했습니다.');
+      }
+    } catch (e) {
+      console.error(e.message);
+      alert('조회를 할 수 없습니다.');
+    }
+  };
+
+  const handleClickKeyword = ({ item, key, keyPath, domEvent }) => {
+    const selectedKeyword = KEYWORDS[Number(key) - 1].name;
+    setSearchKeyword(selectedKeyword);
+    getScrapData(selectedKeyword);
   };
 
   return (
     <Layout hasSider>
-      <Keywords />
+      <Keywords onClick={handleClickKeyword} />
       <Layout
         className="site-layout"
         style={{
@@ -74,7 +104,7 @@ const App = () => {
           minHeight: '100vh',
         }}
       >
-        <HeaderLine text={'111'} />
+        <HeaderLine text={searchKeyword} />
         <Content
           style={{
             margin: '24px 16px 0',
@@ -93,7 +123,7 @@ const App = () => {
           >
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={news}
               renderItem={(item) => (
                 <NewsItem
                   loading={item.loading}

@@ -5,7 +5,7 @@ import { KEYWORDS } from '../../data/keywords';
 const { Title } = Typography;
 const { Sider } = Layout;
 
-export default function Keywords() {
+export default function Keywords({ onClick }) {
   const items = KEYWORDS.map(({ name }, index) => ({
     key: String(index + 1),
     icon: <span />,
@@ -13,11 +13,11 @@ export default function Keywords() {
   }));
 
   const addedItems = [
-    {
-      key: 'select',
-      icon: <StarFilled />,
-      label: '선택한 글',
-    },
+    // {
+    //   key: 'select',
+    //   icon: <StarFilled />,
+    //   label: '선택한 글',
+    // },
     ...items,
   ];
 
@@ -47,6 +47,7 @@ export default function Keywords() {
         mode="inline"
         defaultSelectedKeys={['4']}
         items={addedItems}
+        onClick={onClick}
       />
     </Sider>
   );
