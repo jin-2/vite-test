@@ -26,7 +26,12 @@ export default function NewsItem({ loading, title, description, link }) {
         {/*  icon={<StarOutlined style={{ color: '#2e44a2' }} />}*/}
         {/*/>*/}
         <List.Item.Meta
-          style={{ paddingLeft: '10px', paddingRight: '10px' }}
+          style={{
+            paddingLeft: '10px',
+            paddingRight: '10px',
+            paddingTop: '14px',
+            paddingBottom: '14px',
+          }}
           // avatar={<Avatar shape="square" size={132} src="https://randomuser.me/api/portraits/men/29.jpg" />}
           title={
             <>
@@ -35,17 +40,15 @@ export default function NewsItem({ loading, title, description, link }) {
               {/*</Text>*/}
               {/*<Text style={{ fontSize: '13px', color: '#eff2f4' }}> | </Text>*/}
               {/*<Text style={{ fontSize: '13px', color: '#808080' }}>1일 전</Text>*/}
-              <Link
+              <a
                 target="_blank"
                 href={link}
+                dangerouslySetInnerHTML={{ __html: title }}
                 style={{
                   display: 'block',
-                  fontWeight: 'bold',
                   fontSize: '16px',
                 }}
-              >
-                {title}
-              </Link>
+              />
             </>
           }
           description={

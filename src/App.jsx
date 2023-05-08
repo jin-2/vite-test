@@ -7,55 +7,10 @@ import HeaderLine from './components/HeaderLine';
 import NewsItem from './components/NewsItem';
 import { KEYWORDS } from './data/keywords.js';
 
+const { VITE_API_URL } = import.meta.env;
 const { Content, Footer } = Layout;
 
-const data = [
-  {
-    WORD: '잡코리아',
-    TITLE:
-      "<b>잡코리아</b>·알바몬, '2023 브랜드 고객충성도 대상' 2년 연속 수상",
-    LINK: 'https://www.ngetnews.com/news/articleView.html?idxno=417804',
-    DESCRIPTION:
-      "뉴스저널리즘 윤은식 기자 = <b>잡코리아</b>·알바몬 브랜드 고객충성도 대상. 이미지=<b>잡코리아</b> <b>잡코리아</b>는 취업 플랫폼 <b>잡코리아</b>와 아르바이트 채용플랫폼 알바몬이 '2023 브랜드 고객충성도 대상'에서 2년 연속 각 부문... ",
-    CNT: 13,
-  },
-  {
-    WORD: '잡코리아',
-    TITLE:
-      "<b>잡코리아</b>·알바몬, '2023 브랜드 고객충성도 대상' 2년 연속 수상",
-    LINK: 'https://www.ngetnews.com/news/articleView.html?idxno=417804',
-    DESCRIPTION:
-      "뉴스저널리즘 윤은식 기자 = <b>잡코리아</b>·알바몬 브랜드 고객충성도 대상. 이미지=<b>잡코리아</b> <b>잡코리아</b>는 취업 플랫폼 <b>잡코리아</b>와 아르바이트 채용플랫폼 알바몬이 '2023 브랜드 고객충성도 대상'에서 2년 연속 각 부문... ",
-    CNT: 13,
-  },
-  {
-    WORD: '잡코리아',
-    TITLE:
-      "<b>잡코리아</b>·알바몬, '2023 브랜드 고객충성도 대상' 2년 연속 수상",
-    LINK: 'https://www.ngetnews.com/news/articleView.html?idxno=417804',
-    DESCRIPTION:
-      "뉴스저널리즘 윤은식 기자 = <b>잡코리아</b>·알바몬 브랜드 고객충성도 대상. 이미지=<b>잡코리아</b> <b>잡코리아</b>는 취업 플랫폼 <b>잡코리아</b>와 아르바이트 채용플랫폼 알바몬이 '2023 브랜드 고객충성도 대상'에서 2년 연속 각 부문... ",
-    CNT: 13,
-  },
-  {
-    WORD: '잡코리아',
-    TITLE:
-      "<b>잡코리아</b>·알바몬, '2023 브랜드 고객충성도 대상' 2년 연속 수상",
-    LINK: 'https://www.ngetnews.com/news/articleView.html?idxno=417804',
-    DESCRIPTION:
-      "뉴스저널리즘 윤은식 기자 = <b>잡코리아</b>·알바몬 브랜드 고객충성도 대상. 이미지=<b>잡코리아</b> <b>잡코리아</b>는 취업 플랫폼 <b>잡코리아</b>와 아르바이트 채용플랫폼 알바몬이 '2023 브랜드 고객충성도 대상'에서 2년 연속 각 부문... ",
-    CNT: 13,
-  },
-  {
-    WORD: '잡코리아',
-    TITLE:
-      "<b>잡코리아</b>·알바몬, '2023 브랜드 고객충성도 대상' 2년 연속 수상",
-    LINK: 'https://www.ngetnews.com/news/articleView.html?idxno=417804',
-    DESCRIPTION:
-      "뉴스저널리즘 윤은식 기자 = <b>잡코리아</b>·알바몬 브랜드 고객충성도 대상. 이미지=<b>잡코리아</b> <b>잡코리아</b>는 취업 플랫폼 <b>잡코리아</b>와 아르바이트 채용플랫폼 알바몬이 '2023 브랜드 고객충성도 대상'에서 2년 연속 각 부문... ",
-    CNT: 13,
-  },
-];
+console.log(import.meta.env.MODE, VITE_API_URL);
 
 const App = () => {
   const [firstKeyword] = KEYWORDS;
@@ -73,9 +28,7 @@ const App = () => {
   const getScrapData = async (keyword) => {
     try {
       const { status, data } = await axios.get(
-        `http://172.16.48.167:3012/v1/getListFromWord?word=${encodeURIComponent(
-          keyword
-        )}`
+        `${VITE_API_URL}/v1/getListFromWord?word=${encodeURIComponent(keyword)}`
       );
       if (status === 200) {
         setNews(data);
